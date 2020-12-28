@@ -101,6 +101,7 @@ void BlueSamplerAudioProcessor::changeProgramName (int index, const juce::String
 void BlueSamplerAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     mSampler.setCurrentPlaybackSampleRate(sampleRate);
+    updateADSR();
 }
 
 void BlueSamplerAudioProcessor::releaseResources()
@@ -207,9 +208,15 @@ void BlueSamplerAudioProcessor::loadFile(const String& path)
 }
 
 
-void BlueSamplerAudioProcessor::getADSRValue()
+void BlueSamplerAudioProcessor::updateADSR()
 {
-    
+    for(int i = 0; i < mSampler.getNumSounds(); ++i)
+    {
+        if (auto sound = dynamic_cast<SamplerSound*>(mSampler.getSound(i).get()))
+        {
+            sound->setEnvelopeParameters(mADSRParams);
+        }
+    }
 }
 //==============================================================================
 // This creates new instances of the plugin..

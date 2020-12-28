@@ -174,18 +174,20 @@ void BlueSamplerAudioProcessorEditor::filesDropped(const StringArray& files, int
 void BlueSamplerAudioProcessorEditor::sliderValueChanged (Slider* slider)
 {
     if (slider == &mAttackSlider) {
-        audioProcessor.attack = mAttackSlider.getValue();
+        audioProcessor.getADSRParams().attack = mAttackSlider.getValue();
     }
     else if (slider == &mDecaySlider)
     {
-        audioProcessor.decay = mDecaySlider.getValue();
+        audioProcessor.getADSRParams().decay = mDecaySlider.getValue();
     }
     else if (slider == &mSustainSlider)
     {
-        audioProcessor.sustain = mSustainSlider.getValue();
+        audioProcessor.getADSRParams().sustain = mSustainSlider.getValue();
     }
     else if (slider == &mReleaseSlider)
     {
-        audioProcessor.relase = mReleaseSlider.getValue();
+        audioProcessor.getADSRParams().release = mReleaseSlider.getValue();
     }
+    
+    audioProcessor.updateADSR();
 }

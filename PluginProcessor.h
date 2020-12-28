@@ -59,12 +59,9 @@ public:
     int getNumSamplerSounds() {return mSampler.getNumSounds();}
     AudioBuffer<float>& getWaveForm() { return mWaveForm; }
     
-    void getADSRValue();
+    void updateADSR();
     
-    float attack {0.0};
-    float decay {0.0};
-    float sustain {0.0};
-    float relase {0.0};
+    ADSR::Parameters& getADSRParams() { return mADSRParams; }
 
 private:
     //==============================================================================
@@ -72,6 +69,8 @@ private:
     const int mNumVoices {3};
     
     AudioBuffer<float> mWaveForm;
+    
+    ADSR::Parameters mADSRParams;
     
     AudioFormatManager mFormatManager;
     AudioFormatReader* mFormatReader { nullptr };
